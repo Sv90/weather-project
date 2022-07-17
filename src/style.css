@@ -22,15 +22,14 @@ li {
 }
 .weather-all {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0px;
 }
 .weather-forecast {
   color: #3b3a3a;
   background-color: #f2f2f2;
   border: 1px solid;
-  padding: 25px;
-  margin: 0 auto;
   border-radius: 10px;
+  padding: 25px;
 }
 .weather-icon {
   height: 64px;
