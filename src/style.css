@@ -22,11 +22,10 @@ li {
 }
 .weather-all {
   max-width: 600px;
-  margin: 3px auto;
+  margin: 30px auto;
 }
 .weather-forecast {
   color: #3b3a3a;
-
   border: 1px solid;
   border-radius: 10px;
   padding: 25px;
