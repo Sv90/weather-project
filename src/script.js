@@ -1,3 +1,4 @@
+//Date and time local
 let now = new Date();
 
 function checkTime(i) {
@@ -44,38 +45,34 @@ function formatDate(dateShow) {
 }
 formatDate(now);
 
-//function searchCity(event) {
-//event.preventDefault();
-//let searchInput = document.querySelector("#search-text-input");
-//let h1 = document.querySelector("h1");
-//h1.innerHTML = searchInput.value;
-//}
-//let form = document.querySelector("#search-form");
-//form.addEventListener("submit", searchCity);
+//Celsius and Fahrenheit units changer by click
+
+function celsius(event) {
+  event.preventDefault();
+  let changeTemperatureOne = document.querySelector("#temperature");
+  celsiusLink.classList.remove(active);
+  fahrenheitLink.classList.add(active);
+  changeTemperatureOne.innerHTML = Math.round(celsiusTemperature);
+}
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", celsius);
 
 function fahrenheit(event) {
   event.preventDefault();
   let changeTemperatureOne = document.querySelector("#temperature");
-  let temperature = changeTemperatureOne.innerHTML;
-  temperature = Number(temperature);
-  changeTemperatureOne.innerHTML = Math.round(temperature * 1.8) + 32;
+  changeTemperatureOne.innerHTML = Math.round(celsiusTemperature * 1.8) + 32;
 }
-let fahrenheitTemperature = document.querySelector("#fahrenheit-link");
-fahrenheitTemperature.addEventListener("click", fahrenheit);
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", fahrenheit);
 
-function celsius(event) {
-  event.preventDefault();
-  let changeTemperatureSecond = document.querySelector("#temperature");
-  changeTemperatureSecond.innerHTML = 19;
-}
-let celsiusTemperature = document.querySelector("#celsius-link");
-celsiusTemperature.addEventListener("click", celsius);
-
+//Search engine and changes according to API
 function weather(response) {
   document.querySelector("#city").innerHTML = response.data.name;
-  document.querySelector("#temperature").innerHTML = Math.round(
-    response.data.main.temp
-  );
+
+  celsiusTemperature = response.data.main.temp;
+
+  document.querySelector("#temperature").innerHTML =
+    Math.round(celsiusTemperature);
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
@@ -87,7 +84,7 @@ function weather(response) {
     "src",
     `./images/${response.data.weather[0].icon}.svg`
   );
-  iconElement.setAttribute("alt", response.data.weather[0].description);
+  iconElement.setAttribute("alt", response.data.weather[0].main);
 }
 
 function search(city) {
@@ -104,8 +101,7 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-search("Kyiv");
-
+//Current location and weather button
 function showPosition(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
@@ -122,3 +118,6 @@ function getPosition(event) {
 
 let button = document.querySelector("#currentButton");
 button.addEventListener("click", getPosition);
+
+let celsiusTemperature = null;
+search("Kyiv");

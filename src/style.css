@@ -46,12 +46,15 @@ li {
   position: relative;
   top: -32px;
 }
+
+.search-form {
+  margin-bottom: 20px;
+}
 a {
   text-decoration: none;
 }
-a:hover {
-  text-decoration: underline;
-}
-.search-form {
-  margin-bottom: 20px;
+.active {
+  color: #3b3a3a;
+  cursor: default;
+  text-decoration: none;
 }
