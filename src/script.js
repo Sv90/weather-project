@@ -50,8 +50,8 @@ formatDate(now);
 function celsius(event) {
   event.preventDefault();
   let changeTemperatureOne = document.querySelector("#temperature");
-  celsiusLink.classList.remove(active);
-  fahrenheitLink.classList.add(active);
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
   changeTemperatureOne.innerHTML = Math.round(celsiusTemperature);
 }
 let celsiusLink = document.querySelector("#celsius-link");
@@ -59,11 +59,36 @@ celsiusLink.addEventListener("click", celsius);
 
 function fahrenheit(event) {
   event.preventDefault();
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
   let changeTemperatureOne = document.querySelector("#temperature");
   changeTemperatureOne.innerHTML = Math.round(celsiusTemperature * 1.8) + 32;
 }
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", fahrenheit);
+
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class = "row">`;
+  let days = ["Thu", "Fri", "Sat", "Sun"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="row">
+          <div class="col-2">
+            <div class = "day-forecast">${day}</div>
+               <img src ="https://ssl.gstatic.com/onebox/weather/48/partly_cloudy.png" width="42"/>
+            <div class="temperature-forecast">
+              <span class="temperature-forecast-max">22°</span>
+              <span class="temperature-forecast-min">18°</span>
+           </div>
+           </div>
+           </div>
+    </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
 
 //Search engine and changes according to API
 function weather(response) {
@@ -120,4 +145,6 @@ let button = document.querySelector("#currentButton");
 button.addEventListener("click", getPosition);
 
 let celsiusTemperature = null;
+
 search("Kyiv");
+displayForecast();
