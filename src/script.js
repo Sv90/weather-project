@@ -149,24 +149,6 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-//Current location and weather button
-function showPosition(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-  let units = "metric";
-  let apiKey = "c8a77112b2faf6684bb4b21a0aa778ae";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(weather);
-}
-
-function getPosition(event) {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(showPosition);
-}
-
-let button = document.querySelector("#currentButton");
-button.addEventListener("click", getPosition);
-
 let celsiusTemperature = null;
 
 search("Kyiv");
