@@ -67,27 +67,37 @@ function fahrenheit(event) {
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", fahrenheit);
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
-  let forecastHTML = `<div class = "row">`;
-  let days = ["Thu", "Fri", "Sat", "Sun"];
+  let forecastHTML = `<div class="row">`;
+  let days = [`Thu`, `Fri`, `Sat`, `Sun`];
   days.forEach(function (day) {
     forecastHTML =
       forecastHTML +
-      `<div class="row">
-          <div class="col-2">
-            <div class = "day-forecast">${day}</div>
-               <img src ="https://ssl.gstatic.com/onebox/weather/48/partly_cloudy.png" width="42"/>
-            <div class="temperature-forecast">
-              <span class="temperature-forecast-max">22°</span>
-              <span class="temperature-forecast-min">18°</span>
-           </div>
-           </div>
-           </div>
-    </div>`;
+      `
+<div class="col-3">
+<div class = "weather-forecast-date">
+${day} </div>
+  <img src="https://ssl.gstatic.com/onebox/weather/48/thunderstorms.png"
+  alt="clear"
+  width="42"/>
+  <div class = "weather-forecast-temperatures">
+  <span class="weather-forecast-max">
+  18</span>
+  <span class="weather-forecast-min">
+  13</span>
+  </div>
+  </div>
+    `;
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+function getForecast(coordinates) {
+  let apiKey = "c8a77112b2faf6684bb4b21a0aa778ae";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 //Search engine and changes according to API
@@ -104,12 +114,15 @@ function weather(response) {
   );
   document.querySelector("#weatherDescription").innerHTML =
     response.data.weather[0].main;
+
   let iconElement = document.querySelector("#icon");
   iconElement.setAttribute(
     "src",
     `./images/${response.data.weather[0].icon}.svg`
   );
   iconElement.setAttribute("alt", response.data.weather[0].main);
+
+  getForecast(response.data.coord);
 }
 
 function search(city) {
@@ -147,4 +160,3 @@ button.addEventListener("click", getPosition);
 let celsiusTemperature = null;
 
 search("Kyiv");
-displayForecast();
