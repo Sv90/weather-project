@@ -67,29 +67,39 @@ function fahrenheit(event) {
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", fahrenheit);
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
 function displayForecast(response) {
-  console.log(response.data.daily);
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = `<div class="row">`;
-  let days = [`Thu`, `Fri`, `Sat`, `Sun`];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 4) {
+      forecastHTML =
+        forecastHTML +
+        `
 <div class="col-3">
 <div class = "weather-forecast-date">
-${day} </div>
-  <img src="https://ssl.gstatic.com/onebox/weather/48/thunderstorms.png"
+${formatDay(forecastDay.dt)} </div>
+  <img src="images/${forecastDay.weather[0].icon}.svg"
   alt="clear"
-  width="42"/>
+  width="60"/>
   <div class = "weather-forecast-temperatures">
   <span class="weather-forecast-max">
-  18</span>
+  ${Math.round(forecastDay.temp.max)}°</span>
   <span class="weather-forecast-min">
-  13</span>
+  ${Math.round(forecastDay.temp.min)}°</span>
   </div>
   </div>
     `;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
